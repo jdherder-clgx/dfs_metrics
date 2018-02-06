@@ -2,7 +2,7 @@
 view: __DFS_queue_Overdue_jobs {
 
   derived_table: {
-    sql:  select name as NAME
+    sql:         select name as NAME
       ,username as OWNER
       ,next_run as SCHEDULED_RUN_DATE
       ,DATE_PART('day',   NOW() - next_run) * 24 +  DATE_PART('hour', NOW() - next_run) as HOURS_OVERDUE   /* difference in hours */
@@ -12,9 +12,9 @@ view: __DFS_queue_Overdue_jobs {
       ,description as DESCRIPTION
       from public.jobs j
       inner join public.users u on u.id  = j.owner_id
-      where next_run < NOW()
-      and enabled = true
-      order by next_run desc      ;;  }
+      --where next_run < NOW()
+      --and enabled = true
+      order by next_run desc  ;;  }
 
       dimension: NAME {
         type: string
@@ -29,7 +29,7 @@ view: __DFS_queue_Overdue_jobs {
         sql: ${TABLE}.SCHEDULED_RUN_DATE ;;
       }
       dimension: HOURS_OVERDUE {
-        type: date_time
+        type: number
         sql: ${TABLE}.HOURS_OVERDUE ;;
       }
       dimension: LAST_RUN_DATE {
