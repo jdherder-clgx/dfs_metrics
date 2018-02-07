@@ -12,8 +12,8 @@ view: __DFS_queue_Overdue_jobs {
       ,description as DESCRIPTION
       from public.jobs j
       inner join public.users u on u.id  = j.owner_id
-      --where next_run < NOW()
-      --and enabled = true
+      where next_run < NOW()
+      and enabled = true
       order by next_run desc  ;;  }
 
       dimension: NAME {
