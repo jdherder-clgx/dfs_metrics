@@ -18,7 +18,7 @@ view: __DFS_queue_Completed_jobs {
       inner join public.job_results jr on jr.id = j.id
       --where last_run >= NOW() - '30 day'::interval     /* Last x days */
       --where next_run between CURRENT_DATE + interval '0 hour' and NOW() + '10 day'::interval  /*Midnight and next x days */
-      WHERE '[2017-01-01, 2018-03-01)'::daterange @> last_run::date   /* RANGE starts with [ ends with ), ::date converts timestamp to date */
+      WHERE '[2017-01-01, 2030-01-01)'::daterange @> last_run::date   /* RANGE starts with [ ends with ), ::date converts timestamp to date */
       order by LAST_RUN desc ;;     }
 
 
