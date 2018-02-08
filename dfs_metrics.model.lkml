@@ -43,7 +43,7 @@ explore: __DFS_queue_Next_X_days {
 explore: __DFS_queue_success_fail {
 
 # Give the explore a user-friendly name in the Explore menu
-  label: "DFS queue Success or Failure overview"
+  label: "DFS queue Success or Failure"
 }
 
 
