@@ -32,7 +32,7 @@ view: __DFS_queue_Overdue_jobs {
         sql: ${TABLE}.OWNER ;;
       }
       dimension: SCHEDULED_RUN_DATE {
-        type: number
+        type: date_time
         sql: ${TABLE}.SCHEDULED_RUN_DATE ;;
       }
       dimension: HOURS_OVERDUE {
