@@ -2,58 +2,63 @@
 view: __DFS_queue_Completed_jobs {
 
   derived_table: {
-    sql:  select name as NAME
-      ,username as OWNER
-      --,next_run as SCHEDULED_RUN_DATE
-      ,last_run as RUN_DATE
-      --,jr.finished_at as COMPLETED_DATE
-      ,j.end_run as COMPLETED_DATE
-      ,DATE_PART('day',   j.end_run - last_run) * 24 +  DATE_PART('minute', j.end_run - last_run) as DURATION   /* in minutes */
-      ,jr.succeeded as COMPLETED_SUCCESFULLY
-      --,status as STATUS
-      --,enabled as ENABLED
-      ,description as DESCRIPTION
-      from public.jobs j
-      inner join public.users u on j.owner_id = u.id
-      inner join public.job_results jr on jr.id = j.id
-      --where last_run >= NOW() - '30 day'::interval     /* Last x days */
-      --where next_run between CURRENT_DATE + interval '0 hour' and NOW() + '10 day'::interval  /*Midnight and next x days */
-      WHERE '[2017-01-01, 2030-01-01)'::daterange @> last_run::date   /* RANGE starts with [ ends with ), ::date converts timestamp to date */
-      order by LAST_RUN desc ;;     }
+    sql:
+      select
+      j.order_name as NAME
+    , bu.contact_name as OWNER
+    , j.schedule_date_time as RUN_DATE
+    , je.execution_date as COMPLETED_DATE
+    , case
+        when je.job_status = 'FILE_TRANSFER_COMPLETED' then 'Yes'
+        when je.job_status = 'FILE_TRANSFER_FAILED' then 'No'
+        else 'No'
+      end as COMPLETED_SUCCESFULLY
+
+    , c.customer_name as CUSTOMER_NAME
+
+    from public.job j
+    inner join public.job_execution je on je.id = j.id
+    inner join public.business_unit bu on bu.id = j.business_unit_id
+    inner join public.customer c on c.id = bu.customer_id
+    inner join public.alpine_workflow aw on aw.id = j.workflow_id
+    where  '[2017-01-01, 2028-03-01)'::daterange @> je.execution_date::date  /* RANGE starts with [ ends with ), ::date converts timestamp to date */
+
+    order by je.execution_date desc
+        ;;     }
 
 
 
-dimension: NAME {
-    type: string
-    sql: ${TABLE}.NAME ;;
-  }
+      dimension: NAME {
+        type: string
+        sql: ${TABLE}.NAME ;;
+      }
 
-  dimension: OWNER {
-    type: string
-    sql: ${TABLE}.OWNER ;;
-  }
-  dimension: RUN_DATE {
-    type: date_time
-    sql: ${TABLE}.RUN_DATE ;;
-  }
-  dimension: COMPLETED_DATE {
-    type: date_time
-    sql: ${TABLE}.COMPLETED_DATE ;;
-  }
-  dimension: COMPLETED_SUCCESFULLY {
-    type: yesno
-    sql: ${TABLE}.COMPLETED_SUCCESFULLY ;;
-  }
-  dimension: DESCRIPTION {
-    type: string
-    sql: ${TABLE}.DESCRIPTION ;;
-  }
+      dimension: OWNER {
+        type: string
+        sql: ${TABLE}.OWNER ;;
+      }
+      dimension: RUN_DATE {
+        type: date_time
+        sql: ${TABLE}.RUN_DATE ;;
+      }
+      dimension: COMPLETED_DATE {
+        type: date_time
+        sql: ${TABLE}.COMPLETED_DATE ;;
+      }
+      dimension: COMPLETED_SUCCESFULLY {
+        type: yesno
+        sql: ${TABLE}.COMPLETED_SUCCESFULLY ;;
+      }
+      dimension: CUSTOMER_NAME {
+        type: string
+        sql: ${TABLE}.CUSTOMER_NAME ;;
+      }
 
-  # MEASURE required for  CHART
-  measure: DURATION {
-    hidden:  no
-    type: sum
-    sql: ${TABLE}.DURATION ;;
-  }
+      # # MEASURE required for  CHART
+      # measure: DURATION {
+      #   hidden:  no
+      #   type: sum
+      #   sql: ${TABLE}.DURATION ;;
+      # }
 
-} #END
+    } #END

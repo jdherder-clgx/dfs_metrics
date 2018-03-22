@@ -1,4 +1,4 @@
-connection: "alpine_metadata"
+connection: "faui_idap"
 
 # include all the views
 include: "*.view"
