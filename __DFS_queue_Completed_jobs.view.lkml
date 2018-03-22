@@ -6,7 +6,7 @@ view: __DFS_queue_Completed_jobs {
     select
       j.order_name as NAME
     , bu.contact_name as OWNER
-    , j.schedule_date_time as RUN_DATE
+    , j.schedule_date_time as NEXT_RUN_DATE
     , je.execution_date as COMPLETED_DATE
     , je.job_status as STATUS  /* may change to bool */
     , customer_name as CUSTOMER_NAME
@@ -30,7 +30,7 @@ view: __DFS_queue_Completed_jobs {
         type: string
         sql: ${TABLE}.OWNER ;;
       }
-      dimension: RUN_DATE {
+      dimension: NEXT_RUN_DATE {
         type: date_time
         sql: ${TABLE}.RUN_DATE ;;
       }
