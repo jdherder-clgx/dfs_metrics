@@ -32,7 +32,7 @@ view: __DFS_queue_Completed_jobs {
       }
       dimension: NEXT_RUN_DATE {
         type: date_time
-        sql: ${TABLE}.RUN_DATE ;;
+        sql: ${TABLE}.NEXT_RUN_DATE ;;
       }
       dimension: COMPLETED_DATE {
         type: date_time
