@@ -12,7 +12,7 @@ view: __DFS_queue_Completed_jobs {
     , customer_name as CUSTOMER_NAME
     , aw.name  as WORKFLOW  /* alpine_workflow name of the type of extract */
     from public.job j
-    inner join public.job_execution je on je.id = j.id
+    inner join public.job_execution je on je.job_id = j.id
     inner join public.business_unit bu on bu.id = j.business_unit_id
     inner join public.customer c on c.id = bu.customer_id
     inner join public.alpine_workflow aw on aw.id = j.workflow_id
