@@ -16,7 +16,7 @@ view: __DFS_queue_Running_jobs {
     inner join public.business_unit bu on bu.id = j.business_unit_id
     inner join public.customer c on c.id = bu.customer_id
     inner join public.alpine_workflow aw on aw.id = j.workflow_id
-    where  j.schedule_date_time >=  CURRENT_DATE + interval '0 hour'  /* scheduled for today */
+    where  j.schedule_date_time >=  CURRENT_DATE + interval '0 hour'   /* scheduled for today */
     and je.execution_date between CURRENT_DATE + interval '0 hour'  and NOW()   /* execution today */
     and j.deleted_at is null /* omit deleted jobs */
     and je.id = (select MAX(x.id) from public.job_execution x where x.job_id = j.id ) /* the most current task status */
