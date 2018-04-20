@@ -4,17 +4,11 @@ view: __DFS_queue_Running_jobs {
   derived_table: {
     sql:
 select
-  j.order_name as "NAME"
-, bu.contact_name as "OWNER"
-, j.schedule_date_time as "SCHEDULED_RUN_DATE"  /* want to change to job_execution update_dt */
-, je.execution_date
-, je.job_status as "STATUS"
-, customer_name as "CUSTOMER_NAME"
---, c.id as "c customer id"
---, bu.id as "bu id"
---, j.id as "j id"
---, je.id as "je id"
---, je.job_id as "job id"
+  j.order_name as NAME
+  , bu.contact_name as OWNER
+, j.schedule_date_time as SCHEDULED_RUN_DATE
+, je.job_status as STATUS
+, customer_name as CUSTOMER_NAME
 , aw.name  as WORKFLOW  /* alpine_workflow name of the type of extract */
 from public.job j
 inner join public.job_execution je on je.job_id = j.id
