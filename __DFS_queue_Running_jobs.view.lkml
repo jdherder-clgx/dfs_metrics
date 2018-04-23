@@ -18,7 +18,7 @@ inner join public.alpine_workflow aw on aw.id = j.workflow_id
 where
 --j.schedule_date_time >=  CURRENT_DATE + interval '0 hour'  /* scheduled for today */
 --and
-je.execution_date between CURRENT_DATE + interval '0 hour'  and NOW()   /* execution today */
+je.execution_date >= CURRENT_DATE + interval '0 hour'     /* execution today */
 and j.deleted_at is null /* omit deleted jobs */
 and je.job_status <> 'JOB_COMPLETED'
 --and je.id = (select MAX(x.id) from public.job_execution x where x.job_id = j.id ) /* the most current task status */
