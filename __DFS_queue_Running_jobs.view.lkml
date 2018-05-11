@@ -21,7 +21,7 @@ view: __DFS_queue_Running_jobs {
     and j.deleted_at is null /* omit deleted jobs */
     and je.job_status <> 'JOB_COMPLETED'
     --and je.id = (select MAX(x.id) from public.job_execution x where x.job_id = j.id ) /* the most current task status */
-    order by  j.schedule_date_time desc;
+    order by  j.schedule_date_time desc
     ;;  }
 
       dimension: NAME {
