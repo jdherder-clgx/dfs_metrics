@@ -1,11 +1,9 @@
 
 view: __DFS_queue_Completed_jobs {
 
-
   derived_table: {
     sql:
 
-SET search_path TO public;
 
     select
       j.order_name as NAME
