@@ -1,5 +1,4 @@
 
-
 view: __DFS_queue_Next_X_days {
 
   derived_table: {
@@ -8,7 +7,11 @@ view: __DFS_queue_Next_X_days {
      j.order_name as NAME
     , bu.contact_name as OWNER
     , j.schedule_date_time as SCHEDULED_RUN_DATE
-    , case when je.execution_date < CURRENT_DATE then null
+    --, je.job_status as STATUS
+    --, case when je.execution_date < CURRENT_DATE then null
+    --  else je.execution_date
+    --  end as "EXECUTION_DATE"
+    , case when je.end_date < CURRENT_DATE then null
       else je.job_status
       end  as STATUS
     , j.order_name  as ORDER_NAME
@@ -21,9 +24,12 @@ view: __DFS_queue_Next_X_days {
     inner join public.alpine_workflow aw on aw.id = j.workflow_id
     where
     j.schedule_date_time between CURRENT_DATE + interval '0 hour' and NOW() + '10 day'::interval  /* Next 10 days j.schedule_date_time*/
+    --and je.execution_date between CURRENT_DATE + interval '0 hour' and NOW() + '10 day'::interval  /* Next 10 days - filters only completed jobs */
     and j.deleted_at is  null /* omit deleted jobs */
+    ---
     and je.id = (select MAX(x.id) from public.job_execution x where x.job_id = j.id )
-    order by j.id, je.execution_date desc /* Use je.execution_date since j.schedule_date is always midnight */
+    ---
+    order by j.id, j.schedule_date_time desc
       ;;  }
 
       dimension: NAME {
@@ -38,10 +44,10 @@ view: __DFS_queue_Next_X_days {
         type: date_time
         sql: ${TABLE}.SCHEDULED_RUN_DATE ;;
       }
-      # dimension: LAST_RUN_DATE {
-      #  type: date_time
-      #  sql: ${TABLE}.LAST_RUN_DATE ;;
-      #}
+      #dimension: LAST_RUN_DATE {
+        #  type: date_time
+        #  sql: ${TABLE}.LAST_RUN_DATE ;;
+        #}
       dimension: STATUS {
         type: string
         sql: ${TABLE}.STATUS ;;
