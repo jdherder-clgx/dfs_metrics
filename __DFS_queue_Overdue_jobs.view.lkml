@@ -46,6 +46,7 @@ view: __DFS_queue_Overdue_jobs {
       #  type: date_time
       #  sql: ${TABLE}.LAST_RUN_DATE ;;
       #}
+
       dimension: STATUS {
         type: string
         sql: ${TABLE}.STATUS ;;
