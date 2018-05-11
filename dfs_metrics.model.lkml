@@ -1,4 +1,4 @@
-connection: "faui_idap"
+connection: "doc_preprod"
 
 # include all the views
 include: "*.view"

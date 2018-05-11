@@ -1,2 +1,2 @@
 # dfs_metrics
-DFS Metrics dashboard. Uses faui_idap connection, public database.
+DFS Metrics dashboard. Uses doc_preprod connection, FAUI-stg database.
