@@ -3,8 +3,6 @@ view: __DFS_queue_Completed_jobs {
 
   derived_table: {
     sql:
-
-
     select
       j.order_name as NAME
     , bu.contact_name as OWNER
