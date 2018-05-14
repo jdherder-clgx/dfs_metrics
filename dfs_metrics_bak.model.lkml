@@ -1,7 +1,11 @@
 connection: "doc_preprod"
 
-include: "*.view.lkml"         # include all views in this project
-include: "*.dashboard.lookml"  # include all dashboards in this project
+# include all the views
+include: "*.view"
+
+# include all the dashboards
+include: "*.dashboard"
+
 
 datagroup: dfs_metrics_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
