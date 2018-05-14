@@ -1,12 +1,10 @@
-connection: "alpine_metadata"
+connection: "doc_preprod"
 
 # include all the views
 include: "*.view"
 
 # include all the dashboards
 include: "*.dashboard"
-
-
 
 
 datagroup: dfs_metrics_default_datagroup {
@@ -16,7 +14,7 @@ datagroup: dfs_metrics_default_datagroup {
 
 persist_with: dfs_metrics_default_datagroup
 
-#  MODEL name: dfs_metrics
+#  MODEL name:  dfs_metrics
 
 #  EXPLORE name: DFS METRICS
 

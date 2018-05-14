@@ -2,58 +2,63 @@
 view: __DFS_queue_Completed_jobs {
 
   derived_table: {
-    sql:  select name as NAME
-      ,username as OWNER
-      --,next_run as SCHEDULED_RUN_DATE
-      ,last_run as RUN_DATE
-      --,jr.finished_at as COMPLETED_DATE
-      ,j.end_run as COMPLETED_DATE
-      ,DATE_PART('day',   j.end_run - last_run) * 24 +  DATE_PART('minute', j.end_run - last_run) as DURATION   /* in minutes */
-      ,jr.succeeded as COMPLETED_SUCCESFULLY
-      --,status as STATUS
-      --,enabled as ENABLED
-      ,description as DESCRIPTION
-      from public.jobs j
-      inner join public.users u on j.owner_id = u.id
-      inner join public.job_results jr on jr.id = j.id
-      --where last_run >= NOW() - '30 day'::interval     /* Last x days */
-      --where next_run between CURRENT_DATE + interval '0 hour' and NOW() + '10 day'::interval  /*Midnight and next x days */
-      WHERE '[2017-01-01, 2030-01-01)'::daterange @> last_run::date   /* RANGE starts with [ ends with ), ::date converts timestamp to date */
-      order by LAST_RUN desc ;;     }
+    sql:
 
 
+    select
+      j.order_name as NAME
+    , bu.contact_name as OWNER
+    , j.schedule_date_time as NEXT_RUN_DATE
+    , je.end_date as COMPLETED_DATE
+    , je.job_status as STATUS
+    , customer_name as CUSTOMER_NAME
+    , aw.name  as WORKFLOW  /* alpine_workflow name of the type of extract */
+    from public.job j
+    inner join public.job_execution je on je.job_id = j.id
+    inner join public.business_unit bu on bu.id = j.business_unit_id
+    inner join public.customer c on c.id = bu.customer_id
+    inner join public.alpine_workflow aw on aw.id = j.workflow_id
+    where  '[2017-01-01, 2028-03-01)'::daterange @> je.end_date::date  /* RANGE starts with [ ends with ), ::date converts timestamp to date */
+    and je.job_status = 'JOB_COMPLETED'
+    order by je.end_date desc
+        ;;     }
 
-dimension: NAME {
-    type: string
-    sql: ${TABLE}.NAME ;;
-  }
 
-  dimension: OWNER {
-    type: string
-    sql: ${TABLE}.OWNER ;;
-  }
-  dimension: RUN_DATE {
-    type: date_time
-    sql: ${TABLE}.RUN_DATE ;;
-  }
-  dimension: COMPLETED_DATE {
-    type: date_time
-    sql: ${TABLE}.COMPLETED_DATE ;;
-  }
-  dimension: COMPLETED_SUCCESFULLY {
-    type: yesno
-    sql: ${TABLE}.COMPLETED_SUCCESFULLY ;;
-  }
-  dimension: DESCRIPTION {
-    type: string
-    sql: ${TABLE}.DESCRIPTION ;;
-  }
+      dimension: NAME {
+        type: string
+        sql: ${TABLE}.NAME ;;
+      }
 
-  # MEASURE required for  CHART
-  measure: DURATION {
-    hidden:  no
-    type: sum
-    sql: ${TABLE}.DURATION ;;
-  }
+      dimension: OWNER {
+        type: string
+        sql: ${TABLE}.OWNER ;;
+      }
+      dimension: NEXT_RUN_DATE {
+        type: date_time
+        sql: ${TABLE}.NEXT_RUN_DATE ;;
+      }
+      dimension: COMPLETED_DATE {
+        type: date_time
+        sql: ${TABLE}.COMPLETED_DATE ;;
+      }
+      dimension: STATUS {
+        type: string
+        sql: ${TABLE}.STATUS ;;
+      }
+      dimension: CUSTOMER_NAME {
+        type: string
+        sql: ${TABLE}.CUSTOMER_NAME ;;
+      }
+      dimension: WORKFLOW {
+        type: string
+        sql: ${TABLE}.WORKFLOW ;;
+      }
 
-} #END
+      # MEASURE required for  CHART
+      #measure: DURATION {
+        #  hidden:  no
+        #  type: sum
+        #  sql: ${TABLE}.DURATION ;;
+        #}
+
+    } #END

@@ -3,15 +3,27 @@ view: __DFS_queue_success_fail {
   derived_table: {
     sql:
     -- percentage, two decimal points, succeeded as Successful or Failed
-SELECT
-case when cast(succeeded as varchar) = 'true' then 'Successful'
-     else 'Failed'
-end as EXECUTION_STATUS
-,SUM(case when cast(succeeded as varchar) = 'true' then 1 else 0 END) as SUCCESSFUL,
-SUM(case when cast(succeeded as varchar) = 'false' then 1 else 0 END) as FAILED
-, round((COUNT(succeeded) * 100.0 / (select COUNT(*) from public.job_results))::numeric,2) as PERCENTAGE
-FROM       public.job_results
-GROUP BY EXECUTION_STATUS      ;;   }
+with cte_job_execution as(
+  select  cast( ( coalesce(   job_status, ' ' ) ) as varchar ) as job_status
+  from  public.job_execution je
+  inner join public.job j on je.job_id = j.id
+  where
+    j.deleted_at is  null /* omit deleted jobs */
+    and (job_status = 'JOB_COMPLETED'
+    or job_status like  '%FAILED%'
+    or job_status is null)
+) select
+  case
+    when job_status = 'JOB_COMPLETED' then 'Successful'
+    when job_status like  '%FAILED%'  then 'Failed'
+    when job_status = ' ' then 'Incomplete'
+  end as EXECUTION_STATUS,
+  round(( count( job_status )* 100.0 /( select count(*) from cte_job_execution ))::numeric, 2 ) as PERCENTAGE
+from
+  cte_job_execution
+group by
+  EXECUTION_STATUS
+          ;;   }
 
 
       dimension: EXECUTION_STATUS {
@@ -26,17 +38,5 @@ GROUP BY EXECUTION_STATUS      ;;   }
         sql: ${TABLE}.PERCENTAGE ;;
       }
 
-# MEASURE required for PIE CHART
-      measure: SUCCESSFUL {
-        type: sum
-        sql: ${TABLE}.SUCCESSFUL ;;
-      }
 
-# MEASURE required for PIE CHART
-      measure: FAILED {
-        type: sum
-        sql: ${TABLE}.FAILED ;;
-      }
-
-
-    } # end
+    } # END
