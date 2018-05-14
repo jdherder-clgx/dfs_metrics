@@ -4,7 +4,7 @@ include: "*.view.lkml"         # include all views in this project
 include: "*.dashboard.lookml"  # include all dashboards in this project
 
 datagroup: dfs_metrics_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  # sql_trigger: SELECT MAX(id) FROM etl_log ;;
   max_cache_age: "1 hour"
 }
 
