@@ -6,7 +6,7 @@ view: ___test {
           select
             j.order_name as NAME
           , j.schedule_date_time as NEXT_RUN_DATE
-          from "public"."job" j
+          from job j
 
               ;;     }
 
