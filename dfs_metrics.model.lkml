@@ -65,12 +65,6 @@ explore: __DFS_queue_Completed_jobs {
 }
 
 
-# Create an explorable item based on the "___test" view
-explore: ___test {
-
-# Give the explore a user-friendly name in the Explore menu
-  label: "___test"
-}
 
 # #  # Create an explorable item based on the "__DFS_a_test" view
 #   explore: __DFS_a_test {
