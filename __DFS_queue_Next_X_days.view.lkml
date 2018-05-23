@@ -9,6 +9,7 @@ view: __DFS_queue_Next_X_days {
     , j.schedule_date_time as SCHEDULED_RUN_DATE
     --, case when je.end_date < CURRENT_DATE + interval '0 hour' then null  /* ORIG */
     , case when (j.schedule_date_time < NOW() and je.end_date < CURRENT_DATE + interval '0 hour') then null
+           when (j.schedule_date_time > NOW() and je.end_date < NOW()) then null
            when je.end_date is NULL then null /* See COMPLETED JOBS for previous execution data and status */
       else je.job_status
       end  as STATUS
