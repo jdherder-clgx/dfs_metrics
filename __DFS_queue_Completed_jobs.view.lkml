@@ -18,6 +18,7 @@ view: __DFS_queue_Completed_jobs {
     inner join public.alpine_workflow aw on aw.id = j.workflow_id
     where  '[2017-01-01, 2028-03-01)'::daterange @> je.end_date::date  /* RANGE starts with [ ends with ), ::date converts timestamp to date */
     and je.job_status = 'JOB_COMPLETED'
+    and j.deleted_at is  null /* omit deleted jobs */
     order by je.end_date desc
         ;;     }
 
