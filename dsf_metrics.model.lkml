@@ -3,12 +3,12 @@ connection: "doc_preprod"
 include: "*.view.lkml"         # include all views in this project
 include: "*.dashboard.lookml"  # include all dashboards in this project
 
-datagroup: dsf_metrics_default_datagroup {
+datagroup: dfs_metrics_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log ;;
   max_cache_age: "1 hour"
 }
 
-persist_with: dsf_metrics_default_datagroup
+persist_with: dfs_metrics_default_datagroup
 
 #  MODEL name:  dfs_metrics
 
