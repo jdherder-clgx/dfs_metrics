@@ -27,6 +27,9 @@ view: __DFS_queue_Next_X_days {
     ---
     and je.id = (select MAX(x.id) from public.job_execution x where x.job_id = j.id )
     ---
+    and je.job_status <> 'JOB_COMPLETED'
+
+
     order by j.id, j.schedule_date_time desc
       ;;  }
 
