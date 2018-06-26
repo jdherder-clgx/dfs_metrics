@@ -10,7 +10,7 @@ datagroup: dfs_metrics_default_datagroup {
 
 persist_with: dfs_metrics_default_datagroup
 
-#  MODEL name:  dfs_metrics
+#  MODEL name:  dsf_metrics
 
 #  EXPLORE name: DFS METRICS
 
