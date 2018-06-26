@@ -3,12 +3,12 @@ connection: "doc_preprod"
 include: "*.view.lkml"         # include all views in this project
 include: "*.dashboard.lookml"  # include all dashboards in this project
 
-datagroup: dfs_metrics_default_datagroup {
+datagroup: dsf_metrics_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log ;;
   max_cache_age: "1 hour"
 }
 
-persist_with: dfs_metrics_default_datagroup
+persist_with: dsf_metrics_default_datagroup
 
 #  MODEL name:  dfs_metrics
 
@@ -26,42 +26,42 @@ persist_with: dfs_metrics_default_datagroup
 
 
 # Create an explorable item based on the "__DFS_queue_Next_X_days" view
-explore: __DFS_queue_Next_X_days {
+explore: __DSF_queue_Next_X_days {
 
 # Give the explore a user-friendly name in the Explore menu
-  label: "DFS queue Next X days"
+  label: "DSF queue Next X days"
 }
 
 
 # Create an explorable item based on the "__DFS_queue_success_fail" view
-explore: __DFS_queue_success_fail {
+explore: __DSF_queue_success_fail {
 
 # Give the explore a user-friendly name in the Explore menu
-  label: "DFS queue Success or Failure"
+  label: "DSF queue Success or Failure"
 }
 
 
 # Create an explorable item based on the "__DFS_queue_Overdue_jobs" view
-explore: __DFS_queue_Overdue_jobs {
+explore: __DSF_queue_Overdue_jobs {
 
 # Give the explore a user-friendly name in the Explore menu
-  label: "DFS queue Overdue jobs"
+  label: "DSF queue Overdue jobs"
 }
 
 
 # Create an explorable item based on the "__DFS_queue_Running_jobs" view
-explore: __DFS_queue_Running_jobs {
+explore: __DSF_queue_Running_jobs {
 
 # Give the explore a user-friendly name in the Explore menu
-  label: "DFS queue Running jobs"
+  label: "DSF queue Running jobs"
 }
 
 
 # Create an explorable item based on the "__DFS_queue_Completed_jobs" view
-explore: __DFS_queue_Completed_jobs {
+explore: __DSF_queue_Completed_jobs {
 
 # Give the explore a user-friendly name in the Explore menu
-  label: "DFS queue Completed jobs"
+  label: "DSF queue Completed jobs"
 }
 
 

@@ -1,5 +1,5 @@
 
-view: __DFS_queue_Next_X_days {
+view: __DSF_queue_Next_X_days {
 
   derived_table: {
     sql:

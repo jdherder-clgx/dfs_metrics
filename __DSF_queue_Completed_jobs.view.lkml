@@ -1,5 +1,5 @@
 
-view: __DFS_queue_Completed_jobs {
+view: __DSF_queue_Completed_jobs {
 
   derived_table: {
     sql:

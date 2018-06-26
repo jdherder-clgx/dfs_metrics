@@ -1,4 +1,4 @@
-view: __DFS_queue_success_fail {
+view: __DSF_queue_success_fail {
 
   derived_table: {
     sql:
