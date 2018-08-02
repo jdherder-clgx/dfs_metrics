@@ -1,17 +1,16 @@
 
-view: __DFS_queue_Next_X_days {
+view: __DSF_queue_Next_X_days {
 
   derived_table: {
     sql:
       select
-     j.order_name as NAME
+      j.order_name as NAME
     , bu.contact_name as OWNER
     , j.schedule_date_time as SCHEDULED_RUN_DATE
-    --, je.job_status as STATUS
-    --, case when je.execution_date < CURRENT_DATE then null
-    --  else je.execution_date
-    --  end as "EXECUTION_DATE"
-    , case when je.end_date < CURRENT_DATE then null
+    --, case when je.end_date < CURRENT_DATE + interval '0 hour' then null  /* ORIG */
+    , case when (j.schedule_date_time < NOW() and je.end_date < CURRENT_DATE + interval '0 hour') then null
+           when (j.schedule_date_time > NOW() and je.end_date < NOW()) then null
+           when je.end_date is NULL then null /* See COMPLETED JOBS for previous execution data and status */
       else je.job_status
       end  as STATUS
     , j.order_name  as ORDER_NAME
@@ -24,11 +23,13 @@ view: __DFS_queue_Next_X_days {
     inner join public.alpine_workflow aw on aw.id = j.workflow_id
     where
     j.schedule_date_time between CURRENT_DATE + interval '0 hour' and NOW() + '10 day'::interval  /* Next 10 days j.schedule_date_time*/
-    --and je.execution_date between CURRENT_DATE + interval '0 hour' and NOW() + '10 day'::interval  /* Next 10 days - filters only completed jobs */
     and j.deleted_at is  null /* omit deleted jobs */
     ---
     and je.id = (select MAX(x.id) from public.job_execution x where x.job_id = j.id )
     ---
+    and je.job_status <> 'JOB_COMPLETED'
+
+
     order by j.id, j.schedule_date_time desc
       ;;  }
 

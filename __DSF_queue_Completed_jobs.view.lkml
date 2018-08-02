@@ -1,10 +1,8 @@
 
-view: __DFS_queue_Completed_jobs {
+view: __DSF_queue_Completed_jobs {
 
   derived_table: {
     sql:
-
-
     select
       j.order_name as NAME
     , bu.contact_name as OWNER
@@ -20,6 +18,8 @@ view: __DFS_queue_Completed_jobs {
     inner join public.alpine_workflow aw on aw.id = j.workflow_id
     where  '[2017-01-01, 2028-03-01)'::daterange @> je.end_date::date  /* RANGE starts with [ ends with ), ::date converts timestamp to date */
     and je.job_status = 'JOB_COMPLETED'
+    and j.deleted_at is  null /* omit deleted jobs */
+    and end_date <= NOW()  /* omit jobs with an je.end_date > NOW */
     order by je.end_date desc
         ;;     }
 

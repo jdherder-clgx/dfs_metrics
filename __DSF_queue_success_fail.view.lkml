@@ -1,4 +1,4 @@
-view: __DFS_queue_success_fail {
+view: __DSF_queue_success_fail {
 
   derived_table: {
     sql:
@@ -16,7 +16,7 @@ with cte_job_execution as(
   case
     when job_status = 'JOB_COMPLETED' then 'Successful'
     when job_status like  '%FAILED%'  then 'Failed'
-    when job_status = ' ' then 'Incomplete'
+    else 'Incomplete'
   end as EXECUTION_STATUS,
   round(( count( job_status )* 100.0 /( select count(*) from cte_job_execution ))::numeric, 2 ) as PERCENTAGE
 from
