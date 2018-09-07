@@ -22,7 +22,7 @@ view: __DSF_queue_Overdue_jobs {
     and je.job_status <> 'JOB_COMPLETED'
     and j.deleted_at is  null /* omit deleted jobs */
     and je.id = (select MAX(x.id) from public.job_execution x where x.job_id = j.id )
-    and j.schedule_date_time >= current_date - interval '7 days' /* 30 days is arbitrary but seems to be enough */
+    and j.schedule_date_time >= current_date - interval '3650 days' /* 30 days is arbitrary but seems to be enough */
     order by  j.schedule_date_time
         ;;  }
 
