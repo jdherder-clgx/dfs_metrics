@@ -1,9 +1,9 @@
 - dashboard: dsf_metrics_dashboard
-  title: DSF Metrics
+  title: preprod DSF Metrics
   layout: newspaper
   description: DSF Metrics from doc_preprod source.
   elements:
-  - title: Scheduled Next 10 Days
+  - title: preprod Scheduled Next 10 Days
     name: Scheduled Next 10 Days
     model: dsf_metrics
     explore: __DSF_queue_Next_X_days
@@ -55,7 +55,7 @@
     col: 0
     width: 12
     height: 7
-  - title: Running!
+  - title: preprod Running!
     name: Running!
     model: dsf_metrics
     explore: __DSF_queue_Running_jobs
@@ -107,7 +107,7 @@
     width: 10
     height: 7
   - name: Overdue
-    title: Overdue
+    title: preprod Overdue
     model: dsf_metrics
     explore: __DSF_queue_Overdue_jobs
     type: table
@@ -162,7 +162,7 @@
     col: 15
     width: 9
     height: 7
-  - title: Completed Last 7 Days
+  - title: preprod Completed Last 7 Days
     name: Completed Last 7 Days
     model: dsf_metrics
     explore: __DSF_queue_Completed_jobs
@@ -213,7 +213,7 @@
     col: 12
     width: 12
     height: 7
-  - title: DSF Job Execution Status
+  - title: preprod DSF Job Execution Status
     name: DSF Job Execution Status
     model: dsf_metrics
     explore: __DSF_queue_success_fail
@@ -260,7 +260,7 @@
     width: 5
     height: 7
   filters:
-  - name: Overdue jobs
+  - name: preprod Overdue jobs
     title: Overdue jobs
     type: field_filter
     default_value: "-EMPTY"
