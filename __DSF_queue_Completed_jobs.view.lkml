@@ -34,23 +34,14 @@ view: __DSF_queue_Completed_jobs {
         sql: ${TABLE}.OWNER ;;
       }
 
- # dimension: NEXT_RUN_DATE {
-#    type: date_time
- #   sql: CONVERT_TZ(${TABLE}.NEXT_RUN_DATE,'UTC','PST') ;;
-  #}
-  #dimension: COMPLETED_DATE {
-  #  type: date_time
-  #  sql: CONVERT_TZ(${TABLE}.COMPLETED_DATE,'UTC','PST') ;;
-  #}
-
-      dimension: NEXT_RUN_DATE {
-        type: date_time
-        sql: ${TABLE}.NEXT_RUN_DATE ;;
-      }
-      dimension: COMPLETED_DATE {
-        type: date_time
-        sql: ${TABLE}.COMPLETED_DATE ;;
-      }
+  dimension: NEXT_RUN_DATE {
+    type: date_time
+    sql: ${TABLE}.NEXT_RUN_DATE ;;
+  }
+  dimension: COMPLETED_DATE {
+    type: date_time
+    sql: ${TABLE}.COMPLETED_DATE ;;
+  }
 
 
       dimension: STATUS {
