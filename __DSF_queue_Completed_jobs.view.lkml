@@ -4,16 +4,7 @@ view: __DSF_queue_Completed_jobs {
   derived_table: {
     sql:
     select
-      --j.order_name as NAME
-       'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd end1
-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd end2
-ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddsdddddddddddd end3
-
-
-ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd end4
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb end5
-
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc end6' as NAME
+      j.order_name as NAME
     , bu.contact_name as OWNER
     , j.schedule_date_time as NEXT_RUN_DATE
     , je.end_date as COMPLETED_DATE
