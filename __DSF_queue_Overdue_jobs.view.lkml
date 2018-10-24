@@ -6,7 +6,7 @@ view: __DSF_queue_Overdue_jobs {
     sql:
 
     select
-      j.order_name as NAME
+      j.order_name  as NAME
     , bu.contact_name as OWNER
     , j.schedule_date_time as SCHEDULED_RUN_DATE
     , DATE_PART('day',   NOW() - j.schedule_date_time) * 24 +  DATE_PART('hour', NOW() - j.schedule_date_time) as HOURS_OVERDUE
